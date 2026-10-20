@@ -117,13 +117,13 @@ async def test_manual_entry_when_nothing_is_discovered(hass: HomeAssistant):
     assert result["step_id"] == "manual"
 
     result = await hass.config_entries.flow.async_configure(
-        result["flow_id"], {CONF_ADDRESS: "nonsense", CONF_MODEL: "H6058"}
+        result["flow_id"], {CONF_ADDRESS: "nonsense", CONF_MODEL: "h6058"}
     )
     assert result["type"] is FlowResultType.FORM
     assert result["errors"] == {CONF_ADDRESS: "invalid_address"}
 
     result = await hass.config_entries.flow.async_configure(
-        result["flow_id"], {CONF_ADDRESS: "a1-b2-c3-d4-e5-f6", CONF_MODEL: "H613D"}
+        result["flow_id"], {CONF_ADDRESS: "a1-b2-c3-d4-e5-f6", CONF_MODEL: "h613d"}
     )
     assert result["type"] is FlowResultType.CREATE_ENTRY
     assert result["title"] == "Govee H613D E5F6"
@@ -135,7 +135,7 @@ async def test_manual_entry_already_configured(hass: HomeAssistant):
     with patch(DISCOVERED, return_value=[]):
         result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_USER})
     result = await hass.config_entries.flow.async_configure(
-        result["flow_id"], {CONF_ADDRESS: ADDRESS.lower(), CONF_MODEL: "H6058"}
+        result["flow_id"], {CONF_ADDRESS: ADDRESS.lower(), CONF_MODEL: "h6058"}
     )
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "already_configured"

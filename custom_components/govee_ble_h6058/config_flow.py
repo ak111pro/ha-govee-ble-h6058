@@ -123,14 +123,15 @@ class GoveeBleConfigFlow(ConfigFlow, domain=DOMAIN):
             else:
                 await self.async_set_unique_id(address, raise_on_progress=False)
                 self._abort_if_unique_id_configured()
-                return self._create(address, user_input[CONF_MODEL])
+                return self._create(address, user_input[CONF_MODEL].upper())
 
         schema = vol.Schema(
             {
                 vol.Required(CONF_ADDRESS): str,
-                vol.Required(CONF_MODEL, default="H6058"): SelectSelector(
+                vol.Required(CONF_MODEL, default="h6058"): SelectSelector(
                     SelectSelectorConfig(
-                        options=list(MODELS),
+                        # Translation keys must be lowercase; the stored model is upper case.
+                        options=[model.lower() for model in MODELS],
                         mode=SelectSelectorMode.DROPDOWN,
                         translation_key="model",
                     )

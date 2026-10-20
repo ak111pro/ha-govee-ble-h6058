@@ -41,11 +41,11 @@
   "selector": {
     "model": {
       "options": {
-        "H6058": "H6058 (getestet)",
-        "H6008": "H6008 (ungetestet)",
-        "H613A": "H613A (ungetestet)",
-        "H613D": "H613D (ungetestet)",
-        "H6159": "H6159 (ungetestet)"
+        "h6058": "H6058 (getestet)",
+        "h6008": "H6008 (ungetestet)",
+        "h613a": "H613A (ungetestet)",
+        "h613d": "H613D (ungetestet)",
+        "h6159": "H6159 (ungetestet)"
       }
     }
   },
