@@ -1,0 +1,71 @@
+name: Device report
+description: Tell us how the integration works with your Govee lamp (tested or untested model).
+title: "Device report: <model>"
+labels: ["device report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing! Only the **H6058** has been tested by the maintainer. Reports for the
+        **H6008, H613A, H613D and H6159** (or any other Govee model) decide what gets marked as
+        supported.
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      description: Model number on the box or in the Govee app, for example H613D.
+    validations:
+      required: true
+  - type: input
+    id: advertised_name
+    attributes:
+      label: Advertised Bluetooth name
+      description: >-
+        As shown in the discovery card or under Settings > Devices & services > Bluetooth >
+        Advertisement monitor, for example Govee_H6058_E5F6. Replace the last four characters
+        with XXXX if you like.
+  - type: input
+    id: firmware
+    attributes:
+      label: Firmware version
+      description: Shown on the device page in Home Assistant (or in the Govee app).
+  - type: input
+    id: versions
+    attributes:
+      label: Home Assistant and integration version
+      placeholder: "Home Assistant 2026.10.1, Govee BLE H6058 0.1.0"
+  - type: dropdown
+    id: bluetooth
+    attributes:
+      label: Bluetooth connection
+      options:
+        - Local Bluetooth adapter
+        - ESPHome Bluetooth proxy
+        - Other / not sure
+  - type: checkboxes
+    id: works
+    attributes:
+      label: What works
+      options:
+        - label: Discovery (the lamp was found automatically)
+        - label: On / off
+        - label: Brightness (also check that 100 % in Home Assistant is full brightness on the lamp)
+        - label: RGB colour
+        - label: Colour temperature (white tones)
+        - label: The state follows the physical button or the Govee app
+        - label: The connection stays up (no unavailable periods, commands are instant)
+  - type: textarea
+    id: fails
+    attributes:
+      label: What fails or behaves oddly
+      description: For example "the lamp turns off when I pick a colour" or "brightness tops out at 40 %".
+  - type: textarea
+    id: logs
+    attributes:
+      label: Debug logs and diagnostics
+      description: |
+        Enable debug logging on the integration card (three-dot menu > Enable debug logging),
+        reproduce the problem, disable it again and paste the log here. A diagnostics download
+        (three-dot menu > Download diagnostics) helps too; it does not contain the MAC address.
+        Debug logs may contain it; replace it with XX:XX:XX:XX:XX:XX if you like.
+      render: text

@@ -1,0 +1,125 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "bluetooth_confirm": {
+        "description": "{name} ({model}) einrichten? Home Assistant hält eine dauerhafte Bluetooth-Verbindung zur Lampe, deshalb kann sich die Govee-App nicht verbinden, solange die Integration läuft.\n\nH6058 ist getestet. H6008, H613A, H613D und H6159 sind ungetestet: bitte meldet, was funktioniert und was nicht, als GitHub-Issue (Device report)."
+      },
+      "user": {
+        "description": "In der Nähe wurden Govee-Lampen gefunden.",
+        "menu_options": {
+          "pick": "Gefundene Lampe auswählen",
+          "manual": "MAC-Adresse eingeben"
+        }
+      },
+      "pick": {
+        "description": "H6058 ist getestet. H6008, H613A, H613D und H6159 sind ungetestet: bitte meldet, was funktioniert und was nicht, als GitHub-Issue (Device report).",
+        "data": {
+          "address": "Lampe"
+        }
+      },
+      "manual": {
+        "description": "Gib die Bluetooth-MAC-Adresse der Lampe ein und wähle ihr Modell. Die Lampe muss in Reichweite eines Bluetooth-Adapters oder eines ESPHome-Bluetooth-Proxys mit aktiven Verbindungen sein.\n\nH6058 ist getestet. H6008, H613A, H613D und H6159 sind ungetestet: bitte meldet, was funktioniert und was nicht, als GitHub-Issue (Device report).",
+        "data": {
+          "address": "MAC-Adresse",
+          "model": "Modell"
+        },
+        "data_description": {
+          "address": "Zum Beispiel A1:B2:C3:D4:E5:F6. Die letzten vier Ziffern stehen im Namen, den die Lampe sendet, etwa Govee_H6058_E5F6."
+        }
+      }
+    },
+    "error": {
+      "invalid_address": "Das ist keine gültige MAC-Adresse."
+    },
+    "abort": {
+      "already_configured": "Diese Lampe ist bereits eingerichtet.",
+      "already_in_progress": "Diese Lampe wird bereits eingerichtet.",
+      "not_supported": "Dieses Govee-Modell wird nicht unterstützt."
+    }
+  },
+  "selector": {
+    "model": {
+      "options": {
+        "H6058": "H6058 (getestet)",
+        "H6008": "H6008 (ungetestet)",
+        "H613A": "H613A (ungetestet)",
+        "H613D": "H613D (ungetestet)",
+        "H6159": "H6159 (ungetestet)"
+      }
+    }
+  },
+  "entity": {
+    "light": {
+      "lamp": {
+        "name": "Lampe"
+      }
+    },
+    "sensor": {
+      "battery": {
+        "name": "Akku",
+        "state_attributes": {
+          "raw_status_byte": {
+            "name": "Rohes Statusbyte"
+          },
+          "charge_state": {
+            "name": "Ladezustand",
+            "state": {
+              "charging": "Lädt",
+              "full": "Voll",
+              "unplugged": "Nicht angeschlossen"
+            }
+          },
+          "charging": {
+            "name": "Lädt"
+          }
+        }
+      }
+    },
+    "binary_sensor": {
+      "charging": {
+        "name": "Ladestatus",
+        "state_attributes": {
+          "raw_status_byte": {
+            "name": "Rohes Statusbyte"
+          },
+          "charge_state": {
+            "name": "Ladezustand",
+            "state": {
+              "charging": "Lädt",
+              "full": "Voll",
+              "unplugged": "Nicht angeschlossen"
+            }
+          }
+        }
+      },
+      "plugged_in": {
+        "name": "Anschluss",
+        "state_attributes": {
+          "raw_status_byte": {
+            "name": "Rohes Statusbyte"
+          },
+          "charge_state": {
+            "name": "Ladezustand",
+            "state": {
+              "charging": "Lädt",
+              "full": "Voll",
+              "unplugged": "Nicht angeschlossen"
+            }
+          }
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "not_found": {
+      "message": "Noch kein verbindungsfähiger Bluetooth-Adapter oder Proxy sieht die Lampe {address}."
+    },
+    "unsupported_model": {
+      "message": "Das Modell {model} wird nicht unterstützt."
+    },
+    "send_failed": {
+      "message": "Der Befehl konnte nicht per Bluetooth an {name} gesendet werden: {error}"
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "bluetooth_confirm": {
+        "description": "Set up {name} ({model})? Home Assistant keeps a permanent Bluetooth connection to the lamp, so the Govee app cannot connect while the integration runs.\n\nH6058 is tested. H6008, H613A, H613D and H6159 are untested: please report what works and what fails as a GitHub issue (Device report)."
+      },
+      "user": {
+        "description": "Govee lamps were found nearby.",
+        "menu_options": {
+          "pick": "Choose a discovered lamp",
+          "manual": "Enter a MAC address"
+        }
+      },
+      "pick": {
+        "description": "H6058 is tested. H6008, H613A, H613D and H6159 are untested: please report what works and what fails as a GitHub issue (Device report).",
+        "data": {
+          "address": "Lamp"
+        }
+      },
+      "manual": {
+        "description": "Enter the Bluetooth MAC address of the lamp and choose its model. The lamp must be in range of a Bluetooth adapter or an ESPHome Bluetooth proxy with active connections.\n\nH6058 is tested. H6008, H613A, H613D and H6159 are untested: please report what works and what fails as a GitHub issue (Device report).",
+        "data": {
+          "address": "MAC address",
+          "model": "Model"
+        },
+        "data_description": {
+          "address": "For example A1:B2:C3:D4:E5:F6. The last four digits are part of the name the lamp advertises, such as Govee_H6058_E5F6."
+        }
+      }
+    },
+    "error": {
+      "invalid_address": "This is not a valid MAC address."
+    },
+    "abort": {
+      "already_configured": "This lamp is already configured.",
+      "already_in_progress": "This lamp is already being set up.",
+      "not_supported": "This Govee model is not supported."
+    }
+  },
+  "selector": {
+    "model": {
+      "options": {
+        "H6058": "H6058 (tested)",
+        "H6008": "H6008 (untested)",
+        "H613A": "H613A (untested)",
+        "H613D": "H613D (untested)",
+        "H6159": "H6159 (untested)"
+      }
+    }
+  },
+  "entity": {
+    "light": {
+      "lamp": {
+        "name": "Lamp"
+      }
+    },
+    "sensor": {
+      "battery": {
+        "name": "Battery",
+        "state_attributes": {
+          "raw_status_byte": {
+            "name": "Raw status byte"
+          },
+          "charge_state": {
+            "name": "Charge state",
+            "state": {
+              "charging": "Charging",
+              "full": "Full",
+              "unplugged": "Unplugged"
+            }
+          },
+          "charging": {
+            "name": "Charging"
+          }
+        }
+      }
+    },
+    "binary_sensor": {
+      "charging": {
+        "name": "Charging",
+        "state_attributes": {
+          "raw_status_byte": {
+            "name": "Raw status byte"
+          },
+          "charge_state": {
+            "name": "Charge state",
+            "state": {
+              "charging": "Charging",
+              "full": "Full",
+              "unplugged": "Unplugged"
+            }
+          }
+        }
+      },
+      "plugged_in": {
+        "name": "Plugged in",
+        "state_attributes": {
+          "raw_status_byte": {
+            "name": "Raw status byte"
+          },
+          "charge_state": {
+            "name": "Charge state",
+            "state": {
+              "charging": "Charging",
+              "full": "Full",
+              "unplugged": "Unplugged"
+            }
+          }
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "not_found": {
+      "message": "No connectable Bluetooth adapter or proxy sees the lamp {address} yet."
+    },
+    "unsupported_model": {
+      "message": "The model {model} is not supported."
+    },
+    "send_failed": {
+      "message": "Could not send the command to {name} over Bluetooth: {error}"
+    }
+  }
+}
