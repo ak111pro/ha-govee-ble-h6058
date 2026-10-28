@@ -17,8 +17,11 @@ from .protocol import CMD_FIRMWARE, CMD_POWER, StatusReading, decode_firmware, d
 class GoveeDevice:
     """State shared by all entities of one lamp."""
 
-    def __init__(self, hass: HomeAssistant, address: str, model: ModelInfo, name: str) -> None:
+    def __init__(
+        self, hass: HomeAssistant, address: str, model: ModelInfo, name: str, entry_id: str
+    ) -> None:
         self._hass = hass
+        self._entry_id = entry_id
         self.address = address
         self.model = model
         self.name = name
@@ -105,6 +108,12 @@ class GoveeDevice:
         if not self.firmware:
             return
         registry = dr.async_get(self._hass)
-        device = registry.async_get_device(identifiers={(DOMAIN, self.address)})
+        identifier = (DOMAIN, self.address)
+        # Since HA 2026.10 a lookup by identifier belongs to one config entry; the old
+        # async_get_device(identifiers=...) is deprecated and stops working in 2027.8.
+        if hasattr(registry, "async_get_device_by_identifier"):
+            device = registry.async_get_device_by_identifier(identifier, self._entry_id)
+        else:
+            device = registry.async_get_device(identifiers={identifier})
         if device is not None and device.sw_version != self.firmware:
             registry.async_update_device(device.id, sw_version=self.firmware)

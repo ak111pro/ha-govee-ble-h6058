@@ -1,9 +1,10 @@
 # Changelog
 
-## 0.1.0 – 2026-10-20
+## 0.1.0 – 2026-10-28
 
 First public release. Built from a private single-lamp integration that has controlled a Govee
-H6058 on a Home Assistant 2026.9/2026.10 installation since 2026-09-30.
+H6058 on a Home Assistant 2026.9/2026.10 installation since 2026-09-30, and on this integration
+since 2026-10-28.
 
 ### Added
 
@@ -16,7 +17,8 @@ H6058 on a Home Assistant 2026.9/2026.10 installation since 2026-09-30.
   state is held for 3.5 s after each command so a stale reply cannot flip it back.
 - H6058 only: **Battery**, **Charging** and **Plugged in** diagnostic entities decoded from the
   status reply.
-- Firmware version on the device page.
+- Firmware version on the device page (looked up within the config entry on HA 2026.10+, where the
+  old lookup by identifier is deprecated).
 - Config flow with **Bluetooth discovery** (`Govee_`, `ihoment_` and `GBK_` names of the
   supported models), a list of discovered lamps and **manual MAC entry**; one entry per lamp,
   unique id = MAC address.

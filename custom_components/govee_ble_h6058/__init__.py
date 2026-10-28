@@ -33,7 +33,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: GoveeConfigEntry) -> boo
             translation_placeholders={"address": address},
         )
 
-    device = GoveeDevice(hass, address, model, entry.title)
+    device = GoveeDevice(hass, address, model, entry.title, entry.entry_id)
     entry.runtime_data = device
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)

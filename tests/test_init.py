@@ -123,6 +123,26 @@ async def test_firmware_goes_to_the_device(
     assert device.name == "Desk lamp"
 
 
+async def test_firmware_lookup_is_scoped_to_the_config_entry(
+    hass: HomeAssistant, setup_lamp, device_registry: dr.DeviceRegistry
+):
+    """On HA 2026.10+ the device is looked up within its own config entry."""
+    entry, _send, _stop = setup_lamp
+    device = device_registry.async_get_device(identifiers={(DOMAIN, ADDRESS)})
+    calls = []
+
+    def by_identifier(_registry, identifier, config_entry_id):
+        calls.append((identifier, config_entry_id))
+        return device
+
+    with patch.object(
+        dr.DeviceRegistry, "async_get_device_by_identifier", by_identifier, create=True
+    ):
+        _reply(entry, 0x06, b"1.02.03")
+    assert calls == [((DOMAIN, ADDRESS), entry.entry_id)]
+    assert device_registry.async_get(device.id).sw_version == "1.02.03"
+
+
 async def test_turn_on_with_brightness_and_colour(hass: HomeAssistant, setup_lamp):
     _entry, send, _stop = setup_lamp
     await hass.services.async_call(
